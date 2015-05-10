@@ -1,0 +1,26 @@
+<ion-view view-title="Conoce China">
+  <ion-content>
+  
+    <!-- <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="article in articles track by $index" type="item-text-wrap" href="#/tab/articles/{{article.id}}">
+        
+      </ion-item>
+
+      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+
+    </ion-list> -->
+
+    <ul class="list">
+      <li class="item" ng-repeat="article in articles track by $index">
+        <a href="#/tab/articles/{{article.id}}">
+          {{article.title}}
+        </a>
+        <p>{{article.created_at.slice(0, 10)}}</p>
+      </li>
+
+      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+    </ul>
+
+  </ion-content>
+</ion-view>
+
