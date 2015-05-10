@@ -1,0 +1,17 @@
+<ion-view view-title="Preguntar">
+  <ion-content>
+  
+    <ul class="list">
+      <li class="item" ng-repeat="topic in topics track by $index">
+        <a href="#/tab/topics/{{topic.id}}">
+          {{topic.title}}
+        </a>
+        <p>{{topic.created_at.slice(0, 10)}}</p>
+      </li>
+
+      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+    </ul>
+
+  </ion-content>
+</ion-view>
+

@@ -1,0 +1,10 @@
+<ion-view view-title="{{topic.title}}">
+
+  <ion-content class="padding">
+
+    <h2>{{topic.title}}</h2>
+    <p>{{topic.created_at.slice(0, 10)}}</p>
+    <p ng-bind-html="topic.content"></p>
+
+  </ion-content>
+</ion-view>

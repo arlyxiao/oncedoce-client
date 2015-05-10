@@ -2,21 +2,27 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
-})
+.controller('TopicsCtrl', function($scope, $http, $stateParams, Topics) {
+  var start = 1;
+  $scope.topics = Topics.query({page: start});
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+  $scope.loadMore = function() {
+    
+    if (start > 1) {
+      $http.get(api_domain + '/api/fetch_topics?page=' + start).success(function(items) {
+        $scope.topics = $scope.topics.concat(items);
+      });
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }
+
+    start += 1
   };
+
+})
+
+.controller('TopicsShowCtrl', function($scope, $stateParams, Topic) {
+  $scope.topic = Topic.get({id: $stateParams.id});
 })
 
 .controller('ArticlesCtrl', function($scope, $http, $stateParams, Articles) {
@@ -24,11 +30,12 @@ angular.module('starter.controllers', ['ionic'])
   $scope.articles = Articles.query({page: start});
 
   $scope.loadMore = function() {
-    
+
     $http.get(api_domain + '/api/fetch_articles?page=' + start).success(function(items) {
       $scope.articles = $scope.articles.concat(items);
-      $scope.$broadcast('scroll.infiniteScrollComplete');
     });
+
+    $scope.$broadcast('scroll.infiniteScrollComplete');
 
     start += 1
   };

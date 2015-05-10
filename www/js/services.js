@@ -26,6 +26,16 @@ angular.module('starter.services', ['ngResource'])
   };
 })
 
+
+.factory('Topics', function($resource) {
+  return $resource(api_domain + '/api/fetch_topics?page=:page');
+})
+
+
+.factory('Topic', ['$resource', function($resource) {
+  return $resource(api_domain + '/api/fetch_topics/:id');
+}])
+
 .factory('Articles', function($resource) {
   return $resource(api_domain + '/api/fetch_articles?page=:page');
 })

@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var api_domain = 'http://www.oncedoce.com';
-// var api_domain = 'http://192.168.1.101:3000';
+// var api_domain = 'http://www.oncedoce.com';
+var api_domain = 'http://192.168.1.101:3000';
 
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
@@ -63,16 +63,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
- 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+
+
+  .state('tab.topics', {
+      url: '/topics',
+      views: {
+        'tab-topics': {
+          templateUrl: 'templates/tab-topics.html',
+          controller: 'TopicsCtrl'
+        }
       }
-    }
-  });
+    })
+
+  .state('tab.topics-show', {
+      url: '/topics/:id',
+      views: {
+        'tab-topics': {
+          templateUrl: 'templates/topics-show.html',
+          controller: 'TopicsShowCtrl'
+        }
+      }
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/articles');
