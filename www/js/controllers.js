@@ -2,6 +2,8 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('DashCtrl', function($scope) {})
 
+.controller('LoginCtrl', function() {})
+
 .controller('TopicsCtrl', function($scope, $http, $stateParams, Topics) {
   var start = 1;
   $scope.topics = Topics.query({page: start});

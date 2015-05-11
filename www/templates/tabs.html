@@ -5,7 +5,12 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <!-- Account Tab -->
+  <!-- Dash Tab -->
+  <ion-tab title="Dashboard" icon-off="ion-ios-dash-outline" icon-on="ion-ios-dash" href="#/tab/dash">
+    <ion-nav-view name="tab-dash"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Topics Tab -->
   <ion-tab title="Preguntar" icon-off="ion-ios-help-outline" icon-on="ion-ios-help" href="#/tab/topics">
     <ion-nav-view name="tab-topics"></ion-nav-view>
   </ion-tab>

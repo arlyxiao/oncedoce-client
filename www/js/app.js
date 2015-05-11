@@ -11,6 +11,11 @@ var api_domain = 'http://192.168.1.101:3000';
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
+// .constant('AUTH_EVENTS', {
+//   notAuthenticated: 'auth-not-authenticated',
+//   notAuthorized: 'auth-not-authorized'
+// })
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
