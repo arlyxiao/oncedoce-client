@@ -9,7 +9,7 @@
 var api_domain = 'http://192.168.1.101:3000';
 
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies'])
 
 // .constant('AUTH_EVENTS', {
 //   notAuthenticated: 'auth-not-authenticated',
@@ -30,6 +30,60 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
+
+// .config(['$httpProvider', function($httpProvider) {
+//   $httpProvider.defaults.withCredentials = true;
+// }])
+
+
+
+// .provider('myCSRF',[function(){
+//   var headerName = 'X-CSRF-Token';
+//   var cookieName = 'csrftoken';
+//   var allowedMethods = ['GET'];
+
+//   this.setHeaderName = function(n) {
+//     headerName = n;
+//   }
+//   this.setCookieName = function(n) {
+//     cookieName = n;
+//   }
+//   this.setAllowedMethods = function(n) {
+//     allowedMethods = n;
+//   }
+//   this.$get = ['$cookies', function($cookies){
+//     return {
+//       'request': function(config) {
+//         if(allowedMethods.indexOf(config.method) === -1) {
+//           // do something on success
+//           alert($cookies[cookieName]);
+//           config.headers[headerName] = $cookies[cookieName];
+//         }
+//         return config;
+//       }
+//     }
+//   }];
+// }]).config(function($httpProvider) {
+//   $httpProvider.interceptors.push('myCSRF');
+// })
+
+.config(['$httpProvider', function ($httpProvider) {
+  //Reset headers to avoid OPTIONS request (aka preflight)
+  // $httpProvider.defaults.headers.common = {};
+  // $httpProvider.defaults.headers.post = {};
+  // $httpProvider.defaults.headers.put = {};
+  // $httpProvider.defaults.headers.patch = {};
+
+  $httpProvider.interceptors.push('authInterceptor');
+}])
+
+
+// .config(function ($httpProvider) {
+//   $httpProvider.interceptors.push('authInterceptor');
+// })
+
+
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -39,13 +93,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
   })
 
   // Each tab has its own nav history stack:
+
+  .state('tab.login', {
+      url: '/login',
+      views: {
+        'tab-login': {
+          templateUrl: 'templates/login.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
+
 
   
   .state('tab.articles', {
