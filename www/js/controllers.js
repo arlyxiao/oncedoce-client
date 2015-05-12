@@ -2,6 +2,14 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('DashCtrl', function($scope) {})
 
+.controller('AccountCtrl', function($scope, $state, $window) {
+  if ($window.sessionStorage.username) {
+    $scope.username = $window.sessionStorage.username
+    return;
+  }
+  $state.go('tab.login');
+})
+
 // .controller('LoginCtrl', function($scope, RegisterUser) {
   
 //   $scope.postData = {};
@@ -28,7 +36,7 @@ angular.module('starter.controllers', ['ionic'])
 // })
 
 
-.controller('LoginCtrl', function($scope, $http, $window) {
+.controller('LoginCtrl', function($scope, $state, $http, $window) {
   
   $scope.user = {username: 'john.doe', password: 'foobar'};
   $scope.message = '';
@@ -37,15 +45,11 @@ angular.module('starter.controllers', ['ionic'])
       .post(api_domain + '/api/users/login', $scope.user)
       .success(function (data, status, headers, config) {
         $window.sessionStorage.token = data.token;
-        $scope.message = 'Welcome';
+        $window.sessionStorage.username = JSON.parse(data.user).username;  
+        $state.go('tab.account');    
       })
       .error(function (data, status, headers, config) {
-        // Erase the token if the user fails to log in
-        alert('error')
         delete $window.sessionStorage.token;
-
-        // Handle login errors here
-        $scope.message = 'Error: Invalid user or password';
       });
   };
 
@@ -62,9 +66,8 @@ angular.module('starter.controllers', ['ionic'])
     if (start > 1) {
       $http.get(api_domain + '/api/topics?page=' + start).success(function(items) {
         $scope.topics = $scope.topics.concat(items);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
       });
-
-      $scope.$broadcast('scroll.infiniteScrollComplete');
     }
 
     start += 1
