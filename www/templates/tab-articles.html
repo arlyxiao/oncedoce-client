@@ -18,7 +18,10 @@
         <p>{{article.created_at.slice(0, 10)}}</p>
       </li>
 
-      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+      <ion-infinite-scroll
+        ng-if="moreDataCanBeLoaded()"
+        on-infinite="loadMoreArticles()">
+    </ion-infinite-scroll>
 
     </ul>
 

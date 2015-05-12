@@ -57,20 +57,27 @@ angular.module('starter.controllers', ['ionic'])
 
 
 
-.controller('TopicsCtrl', function($scope, $http, $stateParams, Topics) {
+.controller('TopicsCtrl', function($scope, $http, $stateParams) {
   var start = 1;
-  $scope.topics = Topics.query({page: start});
+  $scope.topics = [];
 
-  $scope.loadMore = function() {
+  $scope.moreDataCanBeLoaded = function() {
+    return true;
+  }
+
+  $scope.loadMoreTopics = function() {
     
-    if (start > 1) {
-      $http.get(api_domain + '/api/topics?page=' + start).success(function(items) {
-        $scope.topics = $scope.topics.concat(items);
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-      });
-    }
+    $http.get(api_domain + '/api/topics?page=' + start).success(function(items) {
+      if (items.length == 0) {
+        $scope.moreDataCanBeLoaded = function() {
+          return false;
+        }
+      }
+      $scope.topics = $scope.topics.concat(items);
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    });
 
-    start += 1
+    start += 1;
   };
 
 })
@@ -79,24 +86,27 @@ angular.module('starter.controllers', ['ionic'])
   $scope.topic = Topic.get({id: $stateParams.id});
 })
 
-.controller('ArticlesCtrl', function($scope, $http, $stateParams, Articles) {
+.controller('ArticlesCtrl', function($scope, $http, $stateParams) {
   var start = 1;
-  $scope.articles = Articles.query({page: start});
+  $scope.articles = [];
 
-  $scope.loadMore = function() {
+  $scope.moreDataCanBeLoaded = function() {
+    return true;
+  }
 
-    $http.get(api_domain + '/api/topics?page=' + start).success(function(items) {
+  $scope.loadMoreArticles = function() {
+    $http.get(api_domain + '/api/articles?page=' + start).success(function(items) {
+      if (items.length == 0) {
+        $scope.moreDataCanBeLoaded = function() {
+          return false;
+        }
+      }
       $scope.articles = $scope.articles.concat(items);
+      $scope.$broadcast('scroll.infiniteScrollComplete');
     });
 
-    $scope.$broadcast('scroll.infiniteScrollComplete');
-
-    start += 1
+    start += 1;
   };
-
-  // $scope.$on('$stateChangeSuccess', function() {
-  //   $scope.loadMore();
-  // });
 
 
 })

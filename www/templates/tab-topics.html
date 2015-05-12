@@ -9,7 +9,10 @@
         <p>{{topic.created_at.slice(0, 10)}}</p>
       </li>
 
-      <ion-infinite-scroll on-infinite="loadMore()"></ion-infinite-scroll>
+      <ion-infinite-scroll 
+        ng-if="moreDataCanBeLoaded()"
+        on-infinite="loadMoreTopics()">
+      </ion-infinite-scroll>
     </ul>
 
   </ion-content>
