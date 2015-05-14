@@ -8,7 +8,6 @@
 // var api_domain = 'http://www.oncedoce.com';
 var api_domain = 'http://192.168.1.101:3000';
 
-
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies'])
 
 // .constant('AUTH_EVENTS', {

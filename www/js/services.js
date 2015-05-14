@@ -5,8 +5,8 @@ angular.module('starter.services', ['ngResource'])
   return {
     request: function (config) {
       config.headers = config.headers || {};
-      if ($window.sessionStorage.token) {
-        config.headers.Authorization = $window.sessionStorage.token;
+      if ($window.localStorage.token) {
+        config.headers.Authorization = $window.localStorage.token;
       }
       return config;
     },
@@ -15,6 +15,17 @@ angular.module('starter.services', ['ngResource'])
         // handle the case where the user is not authenticated
       }
       return response || $q.when(response);
+    }
+  };
+})
+
+.factory('loginService', function($window) {
+  return {
+    undone: function() {
+      if ($window.localStorage.username == undefined || $window.localStorage.username == '') {
+        return true;
+      }
+      return false;
     }
   };
 })

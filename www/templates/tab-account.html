@@ -1,4 +1,4 @@
-<ion-view view-title="La Cuenta">
+<ion-view view-title="La Cuenta" hide-back-button="true">
   <ion-content>
 
     <div class="card">
@@ -6,7 +6,7 @@
         Hola, {{username}}
       </div>
       <div class="item item-text-wrap">
-        Logout
+        <button class="button button-clear button-positive" ng-click="logout()">Logout</button>
       </div>
    
     </div>

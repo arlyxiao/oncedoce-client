@@ -2,12 +2,22 @@ angular.module('starter.controllers', ['ionic'])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('AccountCtrl', function($scope, $state, $window) {
-  if ($window.sessionStorage.username) {
-    $scope.username = $window.sessionStorage.username
-    return;
+.controller('AccountCtrl', function($scope, $state, $window, loginService) {
+
+
+  if (loginService.undone()) {
+    $state.go('tab.login', {}, {reload: true});
   }
-  $state.go('tab.login');
+
+  $scope.logout = function() {
+    $window.localStorage.clear();
+    $state.go('tab.login', {}, {reload: true});
+  }
+
+  $scope.$on('$stateChangeSuccess', function() {
+    $scope.username = $window.localStorage.username;
+  });
+  
 })
 
 // .controller('LoginCtrl', function($scope, RegisterUser) {
@@ -39,17 +49,17 @@ angular.module('starter.controllers', ['ionic'])
 .controller('LoginCtrl', function($scope, $state, $http, $window) {
   
   $scope.user = {username: 'john.doe', password: 'foobar'};
-  $scope.message = '';
   $scope.submit = function () {
     $http
       .post(api_domain + '/api/users/login', $scope.user)
       .success(function (data, status, headers, config) {
-        $window.sessionStorage.token = data.token;
-        $window.sessionStorage.username = JSON.parse(data.user).username;  
-        $state.go('tab.account');    
+        $window.localStorage.token = data.token;
+        $window.localStorage.username = JSON.parse(data.user).username;
+        $state.go('tab.account', {}, {reload: true}); 
       })
       .error(function (data, status, headers, config) {
-        delete $window.sessionStorage.token;
+        delete $window.localStorage.token;
+        delete $window.localStorage.username;
       });
   };
 
@@ -57,7 +67,11 @@ angular.module('starter.controllers', ['ionic'])
 
 
 
-.controller('TopicsCtrl', function($scope, $http, $stateParams) {
+.controller('TopicsCtrl', function($scope, $state, $http, loginService) {
+  if (loginService.undone()) {
+    $state.go('tab.login', {}, {reload: true});
+  }
+
   var start = 1;
   $scope.topics = [];
 
@@ -79,6 +93,7 @@ angular.module('starter.controllers', ['ionic'])
 
     start += 1;
   };
+
 
 })
 
