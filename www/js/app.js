@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-// var api_domain = 'http://www.oncedoce.com';
-var api_domain = 'http://192.168.1.101:3000';
+var api_domain = 'http://www.oncedoce.com';
+// var api_domain = 'http://192.168.1.101:3000';
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies'])
 

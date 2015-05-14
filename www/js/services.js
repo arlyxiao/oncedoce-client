@@ -19,13 +19,17 @@ angular.module('starter.services', ['ngResource'])
   };
 })
 
-.factory('loginService', function($window) {
+.factory('loginService', function($resource, $window) {
   return {
     undone: function() {
       if ($window.localStorage.username == undefined || $window.localStorage.username == '') {
         return true;
       }
       return false;
+    },
+
+    post: function() {
+      return $resource(api_domain + '/api/users/login');
     }
   };
 })

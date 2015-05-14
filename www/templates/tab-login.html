@@ -6,11 +6,26 @@
       <textarea ng-model="postData.text"></textarea>
       <button type="submit" class="button button-positive button-block">Create</button>
     </form> -->
+    <p>{{message}}</p>
 
     <form ng-submit="submit()">
-      <input ng-model="user.username" type="text" name="user" placeholder="Username" />
-      <input ng-model="user.password" type="password" name="pass" placeholder="Password" />
-      <input type="submit" value="Login" />
+      <!-- <input ng-model="user.email" type="text" name="email" placeholder="Email" />
+      <input ng-model="user.password" type="password" name="password" placeholder="Password" />
+      <input type="submit" value="Login" /> -->
+
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" ng-model="user.email" placeholder="email">
+        </label>
+        <label class="item item-input">
+          <input type="password" ng-model="user.password" placeholder="password">
+        </label>
+        </div>
+
+      <div class="padding">
+        <button class="button button-block button-positive">Entrar</button>
+      </div>
+
     </form>
 
 
